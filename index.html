@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Independence Day | Create Your Card</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Merienda:wght@700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon1.png">
+
+    <style>
+        :root {
+            --saffron: #ff9933;
+            --green: #138808;
+            --chakra: #0a5bde;
+            --glass: rgba(255, 255, 255, 0.12);
+            --glassDeep: rgba(255, 255, 255, 0.18);
+            --ink: #1f2937;
+            --light: #ffffff;
+            --brandBlue: #0072ff;
+        }
+
+        /* General Body Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: url('ragul1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--light); 
+        }
+
+        /* Scrollbar styles (optional but nice) */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--saffron) rgba(0,0,0,0.3);
+        }
+        *::-webkit-scrollbar {
+            width: 8px;
+        }
+        *::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }
+        *::-webkit-scrollbar-thumb {
+            background-color: var(--saffron);
+            border-radius: 10px;
+        }
+
+        /* Header */
+        .app-header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 18px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background: linear-gradient(90deg, rgba(255,153,51,0.18), rgba(255,255,255,0.06), rgba(19,136,8,0.18));
+            border-bottom: 1px solid rgba(255,255,255,0.28);
+            z-index: 20;
+        }
+        .brand {
+            font-family: 'Baloo 2', cursive;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            font-size: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, var(--saffron), #ffffff, var(--green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 16px rgba(0,0,0,0.25);
+        }
+        .brand .flag {
+            font-size: 1.4rem;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+        }
+        .nav-mini {
+            display: inline-flex;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .app-footer {
+            position: relative;
+            margin-top: 40px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background: linear-gradient(90deg, rgba(19,136,8,0.18), rgba(255,255,255,0.06), rgba(255,153,51,0.18));
+            border-top: 1px solid rgba(255,255,255,0.28);
+            z-index: 20;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: #f7fafc;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.35);
+        }
+        .app-footer .heart { color: #ff5a6e; }
+        .app-footer .jaihind {
+            margin-left: 8px;
+            font-family: 'Merienda', cursive;
+            background: linear-gradient(90deg, var(--saffron), #ffffff, var(--green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Hero section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 90px 16px 76px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .hero-inner {
+            max-width: min(92vw, 900px);
+            display: grid;
+            gap: 18px;
+            justify-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hello {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(36px, 6vw, 72px);
+            line-height: 1.05;
+            letter-spacing: 0.5px;
+            margin: 0;
+            background: linear-gradient(90deg, var(--saffron) 0%, #ffffff 50%, var(--green) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 26px rgba(0,0,0,0.28);
+            animation: glow 3.2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255,153,51,0.25)); }
+            50% { filter: drop-shadow(0 0 16px rgba(19,136,8,0.35)); }
+        }
+
+        .tagline {
+            font-size: clamp(16px, 2.6vw, 22px);
+            font-weight: 700;
+            opacity: 0.95;
+            text-shadow: 0 0 12px rgba(0,0,0,0.35);
+            margin-top: -6px;
+        }
+
+        .cta {
+            margin-top: 10px;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-size: clamp(16px, 3.5vw, 18px);
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            border: 0;
+            color: #1a202c;
+            background: linear-gradient(90deg, var(--saffron) 0%, #ffffff 50%, var(--green) 100%);
+            cursor: pointer;
+            transition: transform .18s ease, box-shadow .18s ease, color .18s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.24), inset 0 0 0 2px rgba(255,255,255,0.35);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .cta:hover { transform: translateY(-2px) scale(1.02); color: var(--brandBlue); }
+        .cta:active { transform: translateY(1px) scale(0.99); }
+
+        /* Floating balloons (tri-colour) */
+        .balloons {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .balloon {
+            position: absolute;
+            bottom: -15vh;
+            width: 34px;
+            height: 46px;
+            border-radius: 50% 50% 48% 48% / 60% 60% 40% 40%;
+            background:
+                radial-gradient(120% 80% at 30% 25%, rgba(255,255,255,0.65), transparent 45%),
+                linear-gradient(to bottom, var(--saffron) 0 33%, #ffffff 33% 66%, var(--green) 66% 100%);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            opacity: 0.92;
+            animation: floatUp linear infinite;
+        }
+        .balloon::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 2px;
+            height: 40px;
+            background: rgba(255,255,255,0.65);
+            transform: translateX(-50%);
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            5% { opacity: 1; }
+            100% { transform: translateY(-130vh) translateX(-20px) rotate(6deg); opacity: 0.95; }
+        }
+        .b1 { left: 8%; animation-duration: 13s; animation-delay: 0.3s; transform: scale(1.0); }
+        .b2 { left: 22%; animation-duration: 16s; animation-delay: 1.0s; transform: scale(1.2); }
+        .b3 { left: 38%; animation-duration: 12s; animation-delay: 0.6s; transform: scale(0.9); }
+        .b4 { left: 52%; animation-duration: 18s; animation-delay: 1.5s; transform: scale(1.15); }
+        .b5 { left: 66%; animation-duration: 14s; animation-delay: 0.9s; transform: scale(1.0); }
+        .b6 { left: 80%; animation-duration: 17s; animation-delay: 0.4s; transform: scale(0.95); }
+        .b7 { left: 12%; animation-duration: 19s; animation-delay: 1.8s; transform: scale(1.1); }
+        .b8 { left: 72%; animation-duration: 15s; animation-delay: 1.2s; transform: scale(0.88); }
+
+        /* New content sections */
+        .content-section {
+            padding: 60px 24px;
+            background: rgba(10, 25, 47, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            text-align: center;
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-family: 'Baloo 2', cursive;
+            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--saffron), #ffffff, var(--green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 16px rgba(0,0,0,0.3);
+        }
+
+        .tricolor-divider-long {
+            width: 40%;
+            height: 5px;
+            margin: 10px auto 25px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--saffron) 0%, #ffffff 50%, var(--green) 100%);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }
+
+        .section-text {
+            font-size: clamp(16px, 2.5vw, 18px);
+            line-height: 1.7;
+            color: #e2e8f0;
+            opacity: 0.9;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid var(--glass);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 200, 255, 0.3);
+        }
+        
+        .quotes-container {
+            display: grid;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .quote-card {
+            background: var(--glassDeep);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid var(--saffron);
+        }
+
+        .quote-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--light);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: right;
+            margin: 10px 0 0;
+            color: var(--green);
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            .app-header { height: 58px; }
+            .hero { padding: 78px 12px 70px; }
+            .content-section { padding: 40px 16px; margin: 20px auto; }
+        }
+
+        /* Motion-reduction accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .hero *, .modal *, .balloon { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="brand">
+            <span class="flag">🇮🇳</span>
+            Independence Day
+        </div>
+        <div class="nav-mini">Aug 15</div>
+    </header>
+
+    <main class="hero" role="main">
+        <div class="balloons" aria-hidden="true">
+            <div class="balloon b1"></div>
+            <div class="balloon b2"></div>
+            <div class="balloon b3"></div>
+            <div class="balloon b4"></div>
+            <div class="balloon b5"></div>
+            <div class="balloon b6"></div>
+            <div class="balloon b7"></div>
+            <div class="balloon b8"></div>
+        </div>
+
+        <div class="hero-inner">
+            <h1 class="hello">Hello Indian</h1>
+            <div class="tagline">Let’s celebrate our freedom</div>
+            <a href="hello.html" class="cta">
+                Create your Independence Day card
+            </a>
+        </div>
+    </main>
+
+        <section class="content-section">
+        <h2 class="section-title">The Story of Our Freedom</h2>
+        <div class="tricolor-divider-long"></div>
+        <p class="section-text">
+            Indian Independence Day is celebrated annually on 15 August as a national holiday in India commemorating the nation's independence from the United Kingdom on 15 August 1947. On this day, the provisions of the 1947 Indian Independence Act, which transferred legislative sovereignty to the Indian Constituent Assembly, came into effect. The struggle for freedom was a long and arduous one, marked by the sacrifices of countless freedom fighters who envisioned a sovereign, socialist, secular, and democratic republic.
+        </p>
+    </section>
+
+        <section class="content-section">
+        <h2 class="section-title">Moments of Pride</h2>
+        <div class="tricolor-divider-long"></div>
+        <div class="gallery-grid">
+            <img src="https://i.pinimg.com/736x/9b/80/a5/9b80a570d9081fe7c481e23b57bbc3f2.jpg" alt="India Gate">
+            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071" alt="Taj Mahal">
+            <img src="https://i.pinimg.com/736x/df/c4/0d/dfc40d103600eae557f20efa8b21c822.jpg" alt="Indian Flag">
+            <img src="https://i.pinimg.com/736x/01/fe/99/01fe9905e9f0193ecd3ebe400e7880d2.jpg" alt="Hawa Mahal">
+            <img src="https://i.pinimg.com/736x/86/28/1a/86281ab87d686130446f63b5050dc8d4.jpg" alt="Bharat mata">
+            <img src="https://i.pinimg.com/736x/e2/66/72/e26672e22a2c4582b4cdc704b890216f.jpg" alt="Indian forces">
+        </div>
+    </section>
+    
+        <section class="content-section">
+        <h2 class="section-title">Words that Echo</h2>
+        <div class="tricolor-divider-long"></div>
+        <div class="quotes-container">
+            <div class="quote-card">
+                <p class="quote-text">"Freedom is not given, it is taken."</p>
+                <p class="quote-author">- Subhas Chandra Bose</p>
+            </div>
+            <div class="quote-card">
+                <p class="quote-text">"A 'No' uttered from the deepest conviction is better than a 'Yes' merely uttered to please, or worse, to avoid trouble."</p>
+                <p class="quote-author">- Mahatma Gandhi</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="app-footer">
+        Made with <span class="heart">❤</span> for India • <span class="jaihind">Jai Hind!</span>
+    </footer>
+</body>
+</html>

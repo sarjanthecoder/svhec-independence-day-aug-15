@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Independence Day Card Creator - SVGOI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <link rel="icon" type="image/png" href="/favicon1.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Great+Vibes&family=Teko:wght@700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <style>
+    /* Main page styling from the FIRST code block */
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #e2e8f0;
+      background-color: #0d1b3100;
+      background-image: linear-gradient(135deg, #6d2800, #0a192f 50%, #104f2e);
+    }
+    #landing-bg-image {
+      background-image: url('second.jpg');
+      background-size: cover;
+      background-position: center;
+      animation: zoom-effect 25s infinite alternate;
+      will-change: transform;
+    }
+    @keyframes zoom-effect {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .glowing-title {
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff9933, 0 0 40px #ff9933;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #138808, 0 0 40px #138808, 0 0 50px #138808;
+      }
+    }
+    .section-heading {
+      border-bottom: 3px solid #f59e0b;
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .custom-shape-divider-bottom {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      transform: rotate(180deg);
+    }
+    .custom-shape-divider-bottom svg {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 150px;
+    }
+    .custom-shape-divider-bottom .shape-fill {
+      fill: #0a192f;
+    }
+    .form-input {
+      background-color: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all .3s ease;
+    }
+    .form-input:focus { background-color: rgba(255,255,255,0.1); border-color: #f59e0b; outline: none; }
+    .btn-primary {
+      background: linear-gradient(90deg, #ff9933, #f59e0b);
+      color: #1e293b;
+      box-shadow: 0 6px 20px rgba(255,153,51,.35);
+      transition: transform .25s, box-shadow .25s, background-color .25s;
+    }
+    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(255,153,51,.5); }
+    .btn-primary:disabled {
+        background: #555;
+        cursor: not-allowed;
+    }
+    .export-wrap {
+      display: inline-block;
+      padding: 28px;
+      border-radius: 32px;
+      background: transparent;
+    }
+
+    /* --- NEW, CORRECT CARD STYLES FROM THE SECOND CODE BLOCK --- */
+    .atm-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      aspect-ratio: 1.586;
+      box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 38px rgba(168,85,247,.35), 0 0 62px rgba(56,189,248,.30), 0 0 88px rgba(34,197,94,.25);
+      background: linear-gradient(135deg, #1f2d47 0%, #2a3d5f 25%, #344a70 50%, #2a3d5f 75%, #1f2d47 100%);
+      border: 2px solid rgba(255,255,255,.12);
+      isolation: isolate;
+      width: 100%;
+      max-width: 600px;
+    }
+    .shine {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(115deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,.06) 60%, rgba(255,255,255,0) 100%);
+    }
+    .tricolor-wave {
+      position: absolute; inset: -10% -8%; z-index: 2;
+      transform: rotate(-12deg) scale(1.05);
+      opacity: .95;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,.3));
+    }
+    .chakra {
+      position: absolute; left: 50%; top: 50%; z-index: 3;
+      transform: translate(-50%, -50%);
+      width: clamp(140px, 30vw, 200px);
+      height: clamp(140px, 30vw, 200px);
+      opacity: .8;
+    }
+    .card-content {
+      position: relative;
+      z-index: 5;
+      height: 100%;
+      padding: clamp(16px, 4vw, 24px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr auto;
+      grid-template-areas:
+        "top-left     top-right"
+        "center       center"
+        "bottom-left  bottom-right";
+      gap: 1rem;
+    }
+    .area-top-left     { grid-area: top-left; }
+    .area-top-right    { grid-area: top-right; }
+    .area-center       { grid-area: center; }
+    .area-bottom-left  { grid-area: bottom-left; }
+    .area-bottom-right { grid-area: bottom-right; }
+    
+    .area-top-left { display: flex; align-items: center; gap: 12px; }
+    .area-top-right { text-align: right; }
+    .area-center { display: flex; align-items: center; justify-content: center; text-align: center; }
+    .area-bottom-left { display: flex; flex-direction: column; justify-content: flex-end; }
+    .area-bottom-right { display: flex; align-items: flex-end; justify-content: flex-end; }
+
+    .logo {
+      width: clamp(50px, 12vw, 60px);
+      height: clamp(50px, 12vw, 60px);
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .date-tag {
+      font-family: 'Teko', sans-serif;
+      font-size: clamp(20px, 3vw, 30px);
+      color: #f2ea07;
+      text-shadow: 0 0 5px #ffffff;
+    }
+    .greeting {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(32px, 6vw, 52px);
+      color: #fff6d1;
+      text-shadow: 0 0 10px #ffd709, 0 0 22px #ffd709, 0 0 46px #ffc107;
+      white-space: nowrap;
+    }
+    .holder {
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,.8);
+    }
+    
+    .holo {
+      width: clamp(75px, 15vw, 90px);
+      height: clamp(75px, 15vw, 90px);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+    .holo-image { width: 100%; height: 100%; object-fit: cover; }
+    
+    .college-name-top {
+        font-family: 'Poppins', sans-serif;
+        font-size: clamp(9px, 2vw, 12px);
+        font-weight: 700;
+        color: #1a28c1;
+        text-shadow: 0 0 5px #ffffff;
+        line-height: 1.3;
+        margin-top: -10px;
+    }
+
+/* --- FINAL, CORRECTED MEDIA QUERY FOR MOBILE --- */
+    @media (max-width: 480px) {
+      .card-content {
+        /* This gives a fixed space on the right for the photo, preventing text from going under it */
+        grid-template-columns: 1fr 90px;
+        gap: 0 12px; /* Adjust gap for mobile */
+      }
+      .college-name-text {
+        font-size: 9px; /* Make font smaller to fit */
+      }
+      .holder {
+        font-size: 14px; /* Adjust user name size */
+      }
+      .greeting {
+        font-size: 28px; /* Adjust greeting size */
+      }
+      .holo {
+  /* We only need to define the width now */
+  width: clamp(75px, 15vw, 90px); 
+
+  /* This is the key fix: forces the element to be a square */
+  aspect-ratio: 1 / 1; 
+  
+  /* This prevents it from shrinking inside its container */
+  flex-shrink: 0;
+  
+  /* Keep the rest of your styles */
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.5);
+}
+    }
+  </style>
+</head>
+<body class="text-slate-200">
+  <header class="sticky top-0 z-50 py-4 text-center bg-slate-900/50 backdrop-blur-sm relative">
+    <h1 class="text-3xl md:text-4xl font-black glowing-title">Celebrate Our Independence Day</h1>
+   
+  </header>
+
+  <section class="relative h-screen flex flex-col items-center justify-center text-white text-center p-4 overflow-hidden -mt-[88px]">
+    <div id="landing-bg-image" class="absolute inset-0 z-0"></div>
+    <div class="absolute inset-0 z-10 bg-black/60"></div>
+    <div class="relative z-20">
+      <a href="#cardCreatorSection"
+        class="mt-80 inline-block text-gray-900 px-8 py-3 rounded-lg font-bold text-lg"
+        style="background: linear-gradient(90deg, #ff9933, #ebc909);">
+        Create Your Card
+      </a>
+    </div>
+    <div class="custom-shape-divider-bottom">
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+      </svg>
+    </div>
+  </section>
+
+  <div class="container mx-auto p-4 md:p-8">
+    <main id="cardCreatorSection" class="grid grid-cols-1 lg:grid-cols-5 gap-8 pt-16">
+        <div class="lg:col-span-2 bg-slate-800/80 p-6 rounded-2xl shadow-lg">
+          <h2 class="text-2xl font-bold mb-6 text-white section-heading">Personalize Your Card</h2>
+          <div class="space-y-6">
+            <div>
+              <label for="nameOnCardInput" class="text-sm font-semibold mb-2 block text-slate-300">Your Name</label>
+              <input id="nameOnCardInput" type="text" placeholder="Enter your name" class="form-input w-full px-4 py-2 rounded-lg text-white">
+            </div>
+            <div>
+              <label for="userPhotoFile" class="text-sm font-semibold mb-2 block text-slate-300">Your Photo (Circular)</label>
+              <input id="userPhotoFile" type="file" accept="image/*" class="w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-400 file:text-slate-900 hover:file:bg-amber-500 cursor-pointer">
+            </div>
+            <div class="pt-4">
+              <button id="downloadBtn" class="w-full font-bold text-lg px-4 py-3 rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 hover:scale-105 transition-transform">Download Card</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-3 flex justify-center items-center">
+          <div id="exportWrap">
+            <div id="cardPreview" class="atm-card w-full">
+              <div class="shine"></div>
+              <svg class="tricolor-wave" viewBox="0 0 1200 750" preserveAspectRatio="none"><path d="M-50 180 C 250 40, 950 0, 1250 120 L 1250 220 C 950 100, 250 160, -50 300 Z" fill="#FF9933"/><path d="M-50 250 C 300 130, 900 160, 1250 240 L 1250 340 C 900 260, 300 300, -50 420 Z" fill="#ffffff"/><path d="M-50 330 C 300 220, 900 300, 1250 320 L 1250 420 C 900 400, 300 380, -50 500 Z" fill="#138808"/></svg>
+           
+              <div class="card-content">
+                <div class="area-top-left">
+                  <img id="collegeLogo" alt="College Logo" class="logo" src="image.png" />
+                  <div class="college-name-top">
+                    SHREE VENKATESWARA<br>HI-TECH ENGINEERING COLLEGE
+                  </div>
+                </div>
+                <div class="area-top-right">
+                  <div class="date-tag">AUG-15</div>
+                  <div class="date-tag opacity-90 -mt-1">79th</div>
+                </div>
+                <div class="area-center">
+                  <div class="greeting">Happy Independence Day</div>
+                </div>
+                <div class="area-bottom-left">
+                  <div class="holder" id="nameOnCardPreview">YOUR NAME</div>
+                </div>
+                <div class="area-bottom-right">
+                  <div class="holo">
+                    <img id="userPhotoPreview" alt="User Photo" class="holo-image" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96'><rect width='100%' height='100%' fill='%23ffffff'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='12' fill='%231f2937'>IMG</text></svg>">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <section class="mt-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-black text-white section-heading">Legacy of Freedom</h2>
+        <p class="text-lg text-slate-400 mt-2">A tribute to the heroes of the Indian Independence Movement.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center glass-panel p-8 rounded-2xl">
+        <div>
+          <img src="https://i.pinimg.com/736x/f5/23/bf/f523bff539d4694c8f1f2937d19565cb.jpg" alt="Indian Freedom Fighters" class="rounded-lg shadow-2xl w-full h-full object-cover">
+        </div>
+        <div class="text-gray-300 space-y-4">
+          <h3 class="text-2xl font-bold text-white">The Struggle for a Sovereign Nation</h3>
+          <p>The Indian Independence Movement was a long and arduous journey, a testament to the unwavering spirit of millions who dreamed of a free India. It was a multifaceted struggle, marked by both non-violent civil disobedience, famously led by Mahatma Gandhi, and revolutionary activities championed by figures like Subhas Chandra Bose and Bhagat Singh.</p>
+          <p>Leaders such as Jawaharlal Nehru, Sardar Vallabhbhai Patel, and Dr. B.R. Ambedkar laid the groundwork for a democratic and sovereign nation. Their collective vision was to build an India free from oppression, where every citizen had the right to liberty, equality, and justice.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="text-center py-8 mt-20 border-t border-slate-700/50">
+    <p class="text-slate-400">
+      Developed by
+      <span class="font-bold text-amber-400 tracking-wider">SKLN Code Spartans</span>
+    </p>
+    <p class="text-slate-500 text-sm mt-2">
+      Contact:
+      <a href="mailto:developersstudio.site@gmail.com" class="hover:text-amber-500 transition-colors">
+        developersstudio.site@gmail.com
+      </a>
+    </p>
+    <p class="mt-4 space-x-4">
+      <a href="https://sarjan.site" style="color:yellow" target="_blank" class="hover:text-amber-500">sarjan.site</a>
+      <a href="https://karthick.site" style="color:yellow" target="_blank" class="hover:text-amber-500">karthick.site</a>
+      <a href="https://lokeshloki.site" style="color:yellow" target="_blank" class="hover:text-amber-500">lokeshloki.site</a>
+      <a href="https://nishanthk.site" style="color:yellow" target="_blank" class="hover:text-amber-500">nishanthk.site</a>
+    </p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const nameInput = document.getElementById('nameOnCardInput');
+      const photoInput = document.getElementById('userPhotoFile');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const namePreview = document.getElementById('nameOnCardPreview');
+      const photoPreview = document.getElementById('userPhotoPreview');
+      const exportContainer = document.getElementById('exportWrap');
+      nameInput.addEventListener('input', (e) => {
+        const name = e.target.value.trim() || 'YOUR NAME';
+        namePreview.textContent = name.toUpperCase();
+      });
+      photoInput.addEventListener('change', () => {
+        const file = photoInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => { photoPreview.src = e.target.result; };
+        reader.readAsDataURL(file);
+      });
+      downloadBtn.addEventListener('click', () => {
+        downloadBtn.textContent = 'Generating...';
+        downloadBtn.disabled = true;
+        html2canvas(exportContainer, {
+            useCORS: true, 
+            scale: 3, 
+            backgroundColor: null
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'SVGOI-Independence-Day-Card.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            downloadBtn.textContent = 'Download Card';
+            downloadBtn.disabled = false;
+        }).catch(err => {
+            console.error("Canvas Error:", err);
+            alert('Download failed. This can happen if you run the file locally. Try using the "Live Server" extension in VS Code.');
+            downloadBtn.textContent = 'Download Card';
+            downloadBtn.disabled = false;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
